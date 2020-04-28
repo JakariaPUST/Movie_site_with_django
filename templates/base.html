@@ -51,23 +51,23 @@
 							<li><a href="{% url 'movies:movie_language' 'german' %}">German</a></li>
 						</ul>
 					</li>
+
 					<li class="mobsearch">
-						<form class="mobform">
-							<input type="text" name="s" class="mobsearchfield" placeholder="Search...">
+						<form class="mobform" method="GET">
+							<input type="text" name="query" value={{ request.GET.query }} class="mobsearchfield" placeholder="Search...">
 							<input type="submit" value="" class="mobsearchsubmit">
 						</form>
 					</li>
 				</ul>
 			</nav>
-			<form class="search">
-				<input type="text" name="s" class="searchfield" placeholder="Search...">
+			<form class="search" method="GET" action="{% url 'movies:movie_search' %}">
+				<input type="text" name="query" value="{{ request.GET.query }}" class="searchfield" placeholder="Search...">
 				<input type="submit" value="" class="searchsubmit">
 			</form>
 
 			<div class="toggle"><img src="img/menu.svg"></div>
-		</header>
-		<!-- Swiper -->
-		<div class="homeslider">
+		
+	<div class="homeslider">
 			<div class="swiper-container">
 
 				<div class="swiper-wrapper">
@@ -107,8 +107,16 @@
 			</div>
 		</div>
 
+		</header>
+		
+			
+	
+
 		{% block body %}
 		{% endblock body %}
+
+		<!-- Swiper -->
+
 
 		<footer class="footer">
 			<div class="copyright"><p>Copyright &copy 2017 www.focusoncode.com</p></div>

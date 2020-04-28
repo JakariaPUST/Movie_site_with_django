@@ -44,3 +44,18 @@ class MovieLanguage(ListView):
 	    context = super(MovieLanguage, self).get_context_data(**kwargs)
 	    context['language'] = self.language
 	    return context
+
+class MovieSearch(ListView):
+	paginate_by =1
+	model = Movie
+	template_name = 'test.html'
+
+	def get_queryset(self):
+		query =self.request.GET.get('query')
+		if query :
+			object_list = Movie.objects.filter(title__icontains=query)
+			print(query)
+			print(object_list)
+		else :
+			object_list = self.model.objects.none()
+		return object_list
