@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify 
 
 # Create your models here.
 CATEGORY_CHOICES = (
@@ -26,6 +27,15 @@ class Movie(models.Model):
 	status = models.CharField(choices=SATUS_CHOICES,max_length=3)
 	year_of_production = models.DateField()
 	views_count = models.IntegerField(default=0)
+
+	slug = models.SlugField(blank=True,null=True)
+
+	def save(self, *args, **kwargs):
+		if not self.slug :
+			self.slug = slugify(self.title)
+		super(Movie, self).save(*args, **kwargs)
+
+	trailer_link = models.URLField()
 	def __str__(self):
 		return self.title
 
