@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify 
+from django.utils import timezone
 
 # Create your models here.
 CATEGORY_CHOICES = (
@@ -21,15 +22,16 @@ class Movie(models.Model):
 	title = models.CharField(max_length=100)
 	description = models.TextField(max_length=1000)
 	image = models.ImageField(upload_to='movies')
+	banner = models.ImageField(upload_to='movies_banner')
 	category = models.CharField(choices=CATEGORY_CHOICES, max_length=10)
 	language = models.CharField(choices=LANGUAGE_CHOICES,max_length=10)
 	cast = models.CharField(max_length=100)
 	status = models.CharField(choices=SATUS_CHOICES,max_length=3)
 	year_of_production = models.DateField()
 	views_count = models.IntegerField(default=0)
+	created = models.DateTimeField(default=timezone.now)
 
 	slug = models.SlugField(blank=True,null=True)
-
 	def save(self, *args, **kwargs):
 		if not self.slug :
 			self.slug = slugify(self.title)
